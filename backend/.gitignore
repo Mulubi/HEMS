@@ -1,1 +1,7 @@
-
+.env
+/node_modules
+.eslintrc.js
+.gitignore
+babel.config.js
+package-lock.json
+package.json
