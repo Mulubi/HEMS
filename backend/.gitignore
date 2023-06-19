@@ -1,7 +1,14 @@
 .env
 /node_modules
+<<<<<<< HEAD
 .eslintrc.js
 .gitignore
 babel.config.js
 package-lock.json
 package.json
+=======
+package.json
+package-lock.json
+.eslintrc.js
+babel.config.js
+>>>>>>> 78ad586b9eb84024da4af6560f827f697a8a8907
