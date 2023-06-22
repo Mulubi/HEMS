@@ -3,10 +3,18 @@ const Maintenance = require('../models/maintenance');
 const Transfer = require('../models/transfer');
 const asyncWrapper = require('../middleware/async');
 
+const getAllEquipmentStatic = asyncWrapper(async (req, res) => {
+  const equipments = await Equipment.find(req.query);
+  // res.status(200).json({ equipments });
+  // res.status(200).json({ equipments, amount:equipments.length });
+  res.status(200).json({ message: 'All equipment available static route' });
+  // res.status(200).json({ success:true, data:{equipments, nbHits: equipments.length } });
+});
+
 const getAllEquipment = asyncWrapper(async (req, res) => {
     const equipments = await Equipment.find(req.query);
     // res.status(200).json({ equipments });
-    res.status(200).json({ equipments, amount:equipments.length });
+    res.status(200).json({ equipments, Quantity:equipments.length });
     // res.status(200).json({ message: 'All equipment available', equipments });
     // res.status(200).json({ success:true, data:{equipments, nbHits: equipments.length } });
 });
@@ -188,6 +196,7 @@ const modifyMaintenanceRequest = asyncWrapper( async (req, res) => {
 
 
 module.exports = {
+    getAllEquipmentStatic,
     getAllEquipment,
     createEquipment,
     updateEquipment,
