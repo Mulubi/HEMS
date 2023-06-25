@@ -11,4 +11,3 @@ router.route('/').get(getAllTechnicians).post(createTechnician);
 router.route('/:id').get(getTechnicianById).delete(deleteTechnician).patch(updateTechnician)
 
 module.exports = router;
-  

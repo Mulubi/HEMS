@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const {getAllEquipment,
+const {getAllEquipmentStatic,
+    getAllEquipment,
     createEquipment,
     updateEquipment,
     deleteEquipment,
@@ -13,6 +14,8 @@ const {getAllEquipment,
     updateEquipmentStatus,
     modifyMaintenanceRequest
 } = require('../controllers/equipment');
+
+router.route('/static').get(getAllEquipmentStatic);
 router.route('/').get(getAllEquipment, searchEquipment).post(createEquipment);
 router.route('/:id').get(getEquipment).delete(deleteEquipment).patch(updateEquipment, modifyMaintenanceRequest);
 router.route('/:id/maintenance').post(performMaintenance);
