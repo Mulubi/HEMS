@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const {getAllEquipmentStatic,
+import {getAllEquipmentStatic,
     getAllEquipment,
     createEquipment,
     updateEquipment,
@@ -13,7 +13,7 @@ const {getAllEquipmentStatic,
     markEquipmentAsAvailable,
     updateEquipmentStatus,
     modifyMaintenanceRequest
-} = require('../controllers/equipment');
+} from '../controllers/equipment.js';
 
 router.route('/static').get(getAllEquipmentStatic);
 router.route('/').get(getAllEquipment, searchEquipment).post(createEquipment);
@@ -23,4 +23,4 @@ router.route('/:id/transfer').post(transferEquipment);
 router.route('/:id/Available').post(markEquipmentAsAvailable);
 router.route('/:id/status').patch(updateEquipmentStatus);
 
-module.exports = router;
+export default router;

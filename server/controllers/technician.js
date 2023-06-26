@@ -1,7 +1,7 @@
-const Technician = require('../models/technician');
+import Technician from '../models/technician.js';
 
 // Get all technicians
-const getAllTechnicians = async (req, res) => {
+export const getAllTechnicians = async (req, res) => {
   try {
     const technicians = await Technician.find({});
     res.status(200).json({ technicians });
@@ -11,7 +11,7 @@ const getAllTechnicians = async (req, res) => {
 };
 
 // Get a single technician by ID
-const getTechnicianById = async (req, res) => {
+export const getTechnicianById = async (req, res) => {
   try {
     const { id } = req.params;
     const technician = await Technician.findById(id);
@@ -27,7 +27,7 @@ const getTechnicianById = async (req, res) => {
 };
 
 // Create a new technician
-const createTechnician = async (req, res) => {
+export const createTechnician = async (req, res) => {
   try {
     const { firstName, lastName, specialization, phoneNumber } = req.body;
 
@@ -46,7 +46,7 @@ const createTechnician = async (req, res) => {
 };
 
 // Update a technician
-const updateTechnician = async (req, res) => {
+export const updateTechnician = async (req, res) => {
   try {
     const { id } = req.params;
     const { firstName, lastName, specialization, phoneNumber } = req.body;
@@ -73,7 +73,7 @@ const updateTechnician = async (req, res) => {
 };
 
 // Delete a technician
-const deleteTechnician = async (req, res) => {
+export const deleteTechnician = async (req, res) => {
   try {
     const { id } = req.params;
     const technician = await Technician.findByIdAndDelete(id);
@@ -88,10 +88,10 @@ const deleteTechnician = async (req, res) => {
   }
 };
 
-module.exports = {
-    getAllTechnicians,
-    getTechnicianById,
-    createTechnician,
-    updateTechnician,
-    deleteTechnician,
-};
+// module.exports = {
+//     getAllTechnicians,
+//     getTechnicianById,
+//     createTechnician,
+//     updateTechnician,
+//     deleteTechnician,
+// };

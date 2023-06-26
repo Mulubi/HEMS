@@ -6,4 +6,4 @@ const errorHandlerMiddleware = (err,req, res, next) => {
     res.status(500).json({ error: 'Internal Server Error'});
 };
 
-module.exports = errorHandlerMiddleware;
+export default errorHandlerMiddleware;

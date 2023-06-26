@@ -1,9 +1,9 @@
-const Equipment = require('../models/equipment');
-const Maintenance = require('../models/maintenance');
-const Transfer = require('../models/transfer');
-const asyncWrapper = require('../middleware/async');
+import Equipment from '../models/equipment.js';
+import Maintenance from '../models/maintenance.js';
+import Transfer from '../models/transfer.js';
+import asyncWrapper from '../middleware/async.js';
 
-const getAllEquipmentStatic = asyncWrapper(async (req, res) => {
+export const getAllEquipmentStatic = asyncWrapper(async (req, res) => {
   const equipments = await Equipment.find(req.query);
   // res.status(200).json({ equipments });
   // res.status(200).json({ equipments, amount:equipments.length });
@@ -11,7 +11,7 @@ const getAllEquipmentStatic = asyncWrapper(async (req, res) => {
   // res.status(200).json({ success:true, data:{equipments, nbHits: equipments.length } });
 });
 
-const getAllEquipment = asyncWrapper(async (req, res) => {
+export const getAllEquipment = asyncWrapper(async (req, res) => {
     const equipments = await Equipment.find(req.query);
     // res.status(200).json({ equipments });
     res.status(200).json({ equipments, Quantity:equipments.length });
@@ -19,14 +19,14 @@ const getAllEquipment = asyncWrapper(async (req, res) => {
     // res.status(200).json({ success:true, data:{equipments, nbHits: equipments.length } });
 });
 
-const createEquipment = asyncWrapper( async (req, res) => {
+export const createEquipment = asyncWrapper( async (req, res) => {
         const equipment = await Equipment.create(req.body, {
             runValidators: true,
         });
         res.status(200).json({ equipment });
 });
 
-const getEquipment = asyncWrapper( async (req, res) => {
+export const getEquipment = asyncWrapper( async (req, res) => {
         const {id:equipmentID} = req.params;
         const equipment = await Equipment.findOne({_id:equipmentID});
         res.status(200).json({ equipment });
@@ -35,7 +35,7 @@ const getEquipment = asyncWrapper( async (req, res) => {
         };
 });
 
-const updateEquipment = asyncWrapper( async (req, res) => {
+export const updateEquipment = asyncWrapper( async (req, res) => {
         const { id:equipmentID } = req.params;
         
         const equipment = await Equipment.findOneAndUpdate({ _id: equipmentID}, req.body, {
@@ -49,7 +49,7 @@ const updateEquipment = asyncWrapper( async (req, res) => {
         res.status(200).json({ equipment });
 });
 
-const deleteEquipment = asyncWrapper( async (req, res) => {
+export const deleteEquipment = asyncWrapper( async (req, res) => {
     const { id:equipmentID } = req.params;
     const equipment = await Equipment.findOneAndDelete({ _id: equipmentID });
 
@@ -61,7 +61,7 @@ const deleteEquipment = asyncWrapper( async (req, res) => {
 });
 
 
-const searchEquipment = asyncWrapper( async (req, res) => {
+export const searchEquipment = asyncWrapper( async (req, res) => {
     const { query } = req.query;
     const regexQuery = new RegExp(query, 'i');
     
@@ -75,7 +75,7 @@ const searchEquipment = asyncWrapper( async (req, res) => {
     res.status(500).json({ error: 'Failed to search equipment' });
 });
 
-const performMaintenance = asyncWrapper( async (req, res) => {
+export const performMaintenance = asyncWrapper( async (req, res) => {
     const { id: equipmentID } = req.params;
     
     const equipment = await Equipment.findById(equipmentID);
@@ -97,7 +97,7 @@ const performMaintenance = asyncWrapper( async (req, res) => {
 
 
 
-const transferEquipment = asyncWrapper( async (req, res) => {
+export const transferEquipment = asyncWrapper( async (req, res) => {
     const { id } = req.params;
     const { targetLocation } = req.body;
 
@@ -118,7 +118,7 @@ const transferEquipment = asyncWrapper( async (req, res) => {
 });
 
 
-const markEquipmentAsAvailable = asyncWrapper( async (req, res) => {
+export const markEquipmentAsAvailable = asyncWrapper( async (req, res) => {
     const { id } = req.params;
 
     // Check if the equipment exists
@@ -138,7 +138,7 @@ const markEquipmentAsAvailable = asyncWrapper( async (req, res) => {
 });
 
 
-const updateEquipmentStatus = asyncWrapper( async (req, res) => {
+export const updateEquipmentStatus = asyncWrapper( async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
@@ -159,7 +159,7 @@ const updateEquipmentStatus = asyncWrapper( async (req, res) => {
 });
 
 
-const modifyMaintenanceRequest = asyncWrapper( async (req, res) => {
+export const modifyMaintenanceRequest = asyncWrapper( async (req, res) => {
     const { requestId } = req.params;
     const { description, priority, assignedTechnician, status } = req.body;
 
@@ -195,17 +195,17 @@ const modifyMaintenanceRequest = asyncWrapper( async (req, res) => {
 
 
 
-module.exports = {
-    getAllEquipmentStatic,
-    getAllEquipment,
-    createEquipment,
-    updateEquipment,
-    deleteEquipment,
-    getEquipment,
-    searchEquipment,
-    performMaintenance,
-    transferEquipment,
-    markEquipmentAsAvailable,
-    updateEquipmentStatus,
-    modifyMaintenanceRequest
-};
+// module.exports = {
+//     getAllEquipmentStatic,
+//     getAllEquipment,
+//     createEquipment,
+//     updateEquipment,
+//     deleteEquipment,
+//     getEquipment,
+//     searchEquipment,
+//     performMaintenance,
+//     transferEquipment,
+//     markEquipmentAsAvailable,
+//     updateEquipmentStatus,
+//     modifyMaintenanceRequest
+// };

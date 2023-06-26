@@ -1,13 +1,13 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const {getAllTechnicians,
+import {getAllTechnicians,
     getTechnicianById,
     createTechnician,
     updateTechnician,
     deleteTechnician,
-} = require('../controllers/technician');
+} from '../controllers/technician.js';
 router.route('/').get(getAllTechnicians).post(createTechnician);
 router.route('/:id').get(getTechnicianById).delete(deleteTechnician).patch(updateTechnician)
 
-module.exports = router;
+export default router;

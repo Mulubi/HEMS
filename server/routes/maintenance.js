@@ -1,15 +1,17 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const {getAllMaintenanceActivities,
+import {getAllMaintenanceActivities,
     createMaintenanceActivity,
     updateMaintenanceActivity,
     deleteMaintenanceActivity,
     getMaintenanceActivity,
     requestEquipmentMaintenance,
     removeMaintenanceRequest
-} = require('../controllers/maintenance');
+} from '../controllers/maintenance.js';
 router.route('/').get(getAllMaintenanceActivities).post(createMaintenanceActivity);
 router.route('/:id').get(getMaintenanceActivity).delete(deleteMaintenanceActivity, removeMaintenanceRequest).patch(updateMaintenanceActivity)
 router.route('/:id/request').post(requestEquipmentMaintenance);
-module.exports = router;
+
+
+export default router;

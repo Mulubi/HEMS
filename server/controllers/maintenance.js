@@ -1,15 +1,15 @@
-const MaintenanceActivities = require('../models/maintenance');
-const MaintenanceRequest = require('../models/request');
-const asyncWrapper = require('../middleware/async');
+import MaintenanceActivities from '../models/maintenance.js';
+import MaintenanceRequest from '../models/request.js';
+import asyncWrapper from '../middleware/async.js';
 
 
-const getAllMaintenanceActivities = asyncWrapper(async (req, res) => {
+export const getAllMaintenanceActivities = asyncWrapper(async (req, res) => {
     const maintenanceActivities = await MaintenanceActivities.find({});
     res.status(200).json({ msg: 'These are the maintenance activities', maintenanceActivities });
     // res.send('All Maintenance activities planned are here')
 });
 
-const createMaintenanceActivity = asyncWrapper( async (req, res) => {
+export const createMaintenanceActivity = asyncWrapper( async (req, res) => {
     const maintenanceActivity = await MaintenanceActivities.create(req.body, {
         runValidators: true,
     });
@@ -17,7 +17,7 @@ const createMaintenanceActivity = asyncWrapper( async (req, res) => {
 });
 
 
-const getMaintenanceActivity = asyncWrapper( async (req, res) => {
+export const getMaintenanceActivity = asyncWrapper( async (req, res) => {
     const {id:maintenanceID} = req.params;
     const maintenanceActivity = await MaintenanceActivities.findOne({_id:maintenanceID});
     res.status(200).json({ maintenanceActivity });
@@ -26,7 +26,7 @@ const getMaintenanceActivity = asyncWrapper( async (req, res) => {
     };
 });
 
-const updateMaintenanceActivity = asyncWrapper( async (req, res) => {
+export const updateMaintenanceActivity = asyncWrapper( async (req, res) => {
     const { id:maintenanceID } = req.params;
     
     const maintenanceActivity = await MaintenanceActivities.findOneAndUpdate({ _id: maintenanceID}, req.body, {
@@ -40,7 +40,7 @@ if (!maintenanceActivity) {
     res.status(200).json({ maintenanceActivity });
 });
 
-const deleteMaintenanceActivity = asyncWrapper( async (req, res) => {
+export const deleteMaintenanceActivity = asyncWrapper( async (req, res) => {
     const { id:maintenanceID } = req.params;
     const maintenanceActivity = await MaintenanceActivities.findOneAndDelete({ _id: maintenanceID });
 
@@ -53,7 +53,7 @@ const deleteMaintenanceActivity = asyncWrapper( async (req, res) => {
 
 
 
-const requestEquipmentMaintenance = asyncWrapper( async (req, res) => {
+export const requestEquipmentMaintenance = asyncWrapper( async (req, res) => {
     const { id } = req.params;
     const { description, priority } = req.body;
 
@@ -98,7 +98,7 @@ const requestEquipmentMaintenance = asyncWrapper( async (req, res) => {
 
 
 
-const removeMaintenanceRequest = asyncWrapper( async (req, res) => {
+export const removeMaintenanceRequest = asyncWrapper( async (req, res) => {
     const { requestId } = req.params;
 
     // Check if the maintenance request exists
@@ -118,12 +118,12 @@ const removeMaintenanceRequest = asyncWrapper( async (req, res) => {
 
 
 
-module.exports = {
-    getAllMaintenanceActivities,
-    createMaintenanceActivity,
-    updateMaintenanceActivity,
-    deleteMaintenanceActivity,
-    getMaintenanceActivity,
-    requestEquipmentMaintenance,
-    removeMaintenanceRequest
-};
+// module.exports = {
+//     getAllMaintenanceActivities,
+//     createMaintenanceActivity,
+//     updateMaintenanceActivity,
+//     deleteMaintenanceActivity,
+//     getMaintenanceActivity,
+//     requestEquipmentMaintenance,
+//     removeMaintenanceRequest
+// };
