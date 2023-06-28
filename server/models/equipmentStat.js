@@ -1,7 +1,11 @@
 import mongoose from 'mongoose';
 
 
-const equipmentSchema = new mongoose.Schema({
+const EquipmentStatSchema = new mongoose.Schema({
+    equipmentId: String,
+    totalNumber: Number,
+
+    
     name: {
         type: String,
         required: true['Please provide name of equipment'],
@@ -74,6 +78,6 @@ const equipmentSchema = new mongoose.Schema({
 { timestamps: true }
 );
 
-const Equipment = mongoose.model('Equipment', equipmentSchema);
+const EquipmentStat = mongoose.model('EquipmentStat', EquipmentStatSchema);
 
-export default Equipment;
+export default EquipmentStat;

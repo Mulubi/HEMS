@@ -48,8 +48,18 @@ import technicianRoutes from './routes/technician.js';
 
 
 //Data imports
+import RequestStat from './models/requestStat.js';
+import MaintenanceRequest from './models/request.js';
+import Equipment from './models/equipment.js';
+import EquipmentStat from './models/equipmentStat.js';
 import User from './models/user.js';
-import { dataUser } from './data/index.js';
+import {
+    dataUser,
+    dataRequestStat,
+    dataMaintenanceRequest,
+    dataEquipment,
+    dataEquipmentStat
+} from './data/index.js';
 
 // configuration settings
 dotenv.config();
@@ -92,7 +102,10 @@ mongoose.connect(process.env.MONGO_URL, {
     useUnifiedTopology: true,
 }).then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-
+    // Equipment.insertMany(dataEquipment);
+    // EquipmentStat.insertMany(dataEquipmentStat);
+    // MaintenanceRequest.insertMany(dataMaintenanceRequest);
+    // RequestStat.insertMany(dataRequestStat);
     //User.insertMany(dataUser);
 
 }).catch((error) => console.log(`${error} did not connect`));
