@@ -11,9 +11,9 @@ export const getAllMaintenanceActivities = asyncWrapper(async (req, res) => {
 
 export const createMaintenanceActivity = asyncWrapper( async (req, res) => {
     const maintenanceActivity = await MaintenanceActivities.create(req.body, {
-        runValidators: true,
+        runValidators: true
     });
-    res.status(200).json({ maintenanceActivity });
+    res.status(201).json({ maintenanceActivity });
 });
 
 

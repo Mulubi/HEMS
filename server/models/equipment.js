@@ -3,10 +3,10 @@ import mongoose from 'mongoose';
 
 const equipmentSchema = new mongoose.Schema({
     name: {
-        type: String,
-        required: true['Please provide name of equipment'],
+        type:String,
+        required:[true, 'Please provide name of equipment'],
         trim:true,
-        maxlength: 100
+        maxlength:[80, 'Name cannot be more than 80 characters']
     },
     make: String,
     model: String,

@@ -1,6 +1,7 @@
 // const http = require('http');
+import http from 'http';
+const hostname = '127.0.0.1';
 
-// const hostname = '127.0.0.1';
 // const port = 3000;
 
 // const server = http.createServer((req, res) => {
@@ -21,10 +22,12 @@
 // require('helmet');
 // require('morgan');
 
-import 'express-async-errors';
-import express from 'express';
 
-import dotenv from 'dotenv';
+import express from 'express';
+const app = express();
+import 'express-async-errors';
+
+
 import helmet from 'helmet';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
@@ -37,15 +40,21 @@ import cors from 'cors';
 // const notFound = require('./middleware/not-found');
 // const errorHandlerMiddleware = require('./middleware/error-handler');
 
-import clientRoutes from './routes/client.js';
-import generalRoutes from './routes/general.js';
-import managementRoutes from './routes/management.js';
-import requestsRoutes from './routes/requests.js';
-import equipmentRoutes from './routes/equipment.js';
-import maintenanceRoutes from './routes/maintenance.js';
-import technicianRoutes from './routes/technician.js';
+import client from './routes/client.js';
+import general from './routes/general.js';
+import management from './routes/management.js';
+import requests from './routes/requests.js';
+import equipment from './routes/equipment.js';
+import maintenance from './routes/maintenance.js';
+import technician from './routes/technician.js';
+import connectDB from './db/connect.js';
 // import requestsRoutes from './routes/requests.js';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
+import errorHandlerMiddleware from './middleware/error-handler.js'
+import notFound from './middleware/not-found.js';
 
 //Data imports
 import RequestStat from './models/requestStat.js';
@@ -53,26 +62,29 @@ import MaintenanceRequest from './models/request.js';
 import Equipment from './models/equipment.js';
 import EquipmentStat from './models/equipmentStat.js';
 import User from './models/user.js';
+// import {
+//     dataUser,
+//     dataRequestStat,
+//     dataMaintenanceRequest,
+//     dataEquipment,
+//     dataEquipmentStat
+// } from './data/index.js';
 import {
-    dataUser,
-    dataRequestStat,
-    dataMaintenanceRequest,
-    dataEquipment,
-    dataEquipmentStat
+    dataUser
 } from './data/index.js';
+import { error } from 'console';
 
-// configuration settings
-dotenv.config();
-const app = express();
-app.use(express.json());
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin"}));
-app.use(morgan("common"));
-app.use(bodyParser.json);
-app.use(bodyParser.urlencoded({ extended: false}));
-app.use(cors());
 
 // // middleware
 // app.use(express.static('./public'));
+app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+// configuration settings
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin"}));
+app.use(morgan("common"));
+// app.use(bodyParser.json);
+app.use(bodyParser.urlencoded({ extended: false}));
+app.use(cors());
 
 
 // Test Routes
@@ -81,48 +93,64 @@ app.use(cors());
 // });
 
 // Main App Routes
-app.use('/api/v1/equipment',equipmentRoutes);
-app.use('/api/v1/maintenance',maintenanceRoutes);
-app.use('/api/v1/technician',technicianRoutes);
-app.use('/api/v1/client',clientRoutes);
-app.use('/api/v1/general',generalRoutes);
-app.use('/api/v1/management',managementRoutes);
-app.use('/api/v1/requests',requestsRoutes);
+app.use('/api/v1/equipment',equipment);
+app.use('/api/v1/maintenance',maintenance);
+app.use('/api/v1/technician',technician);
+app.use('/api/v1/client',client);
+app.use('/api/v1/general',general);
+app.use('/api/v1/management',management);
+app.use('/api/v1/requests',requests);
 // app.use('/api/v1/maintenance',maintenance);
 // app.use('/api/v1/technician',technician);
 
-// // Errors
-// app.use(notFound);
-// app.use(errorHandlerMiddleware);
+
+
+
+
+// Errors
+app.use(notFound);
+app.use(errorHandlerMiddleware);
+
+const port = process.env.PORT || 3000;
 
 // Mongoose setup
-const PORT = process.env.PORT || 6001;
-mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-    // Equipment.insertMany(dataEquipment);
-    // EquipmentStat.insertMany(dataEquipmentStat);
-    // MaintenanceRequest.insertMany(dataMaintenanceRequest);
-    // RequestStat.insertMany(dataRequestStat);
-    //User.insertMany(dataUser);
-
-}).catch((error) => console.log(`${error} did not connect`));
-
-
-
-
-// const start = async () => {
-//     try {
-//         await connectDB(process.env.MONGO_URL)
-//         app.listen(port, console.log(`Server running on port: ${port}...`));
-//     } catch (error) {
-//         console.log(error)
-//     }
-// };
-
 // const PORT = process.env.PORT || 6001;
+// mongoose.connectDB(process.env.MONGO_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// }).then(() => {
+//     app.listen(port, () => console.log(`Server Port: ${port}`));
+//     // Equipment.insertMany(dataEquipment);
+//     // EquipmentStat.insertMany(dataEquipmentStat);
+//     // MaintenanceRequest.insertMany(dataMaintenanceRequest);
+//     // RequestStat.insertMany(dataRequestStat);
+//     //User.insertMany(dataUser);
+
+// }).catch((error) => console.log(`${error} did not connect`));
+
+// const server = http.createServer((req, res) => {
+//   res.statusCode = 200;
+//   res.setHeader('Content-Type', 'text/plain');
+//   res.end('Hello Wice');
+// });
+
+// console.log("HEMS App");
+
+// server.listen(port, hostname, () => {
+//   console.log(`Server running at http://${hostname}:${port}/`);
+// });
+
+
+const start = async () => {
+    try {
+        await connectDB(process.env.MONGO_URL)
+        app.listen(port, console.log(`Server running on port: ${port}...`));
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+
 // const start = async () => {
 //   try {
 //     await mongoose.connect(process.env.MONGO_URL, {
@@ -136,6 +164,7 @@ mongoose.connect(process.env.MONGO_URL, {
 //   }
 // };
 
-// start();
+start();
 
 console.log("HEMS App");
+// app.listen(port, () => console.log(`Server Port: ${port}`));

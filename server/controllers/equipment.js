@@ -11,20 +11,25 @@ export const getAllEquipmentStatic = asyncWrapper(async (req, res) => {
   // res.status(200).json({ success:true, data:{equipments, nbHits: equipments.length } });
 });
 
-export const getAllEquipment = asyncWrapper(async (req, res) => {
+export const getAllEquipment = async (req, res) => {
     const equipments = await Equipment.find(req.query);
-    // res.status(200).json({ equipments });
     res.status(200).json({ equipments, Quantity:equipments.length });
+    // res.status(200).json({ equipments });
+    // res.send('All Equipment can be found here: ');
     // res.status(200).json({ message: 'All equipment available', equipments });
     // res.status(200).json({ success:true, data:{equipments, nbHits: equipments.length } });
+};
+
+export const createEquipment = asyncWrapper(async (req, res) => {
+        const equipment = await Equipment.create(req.body);
+        res.status(201).json({ equipment });
 });
 
-export const createEquipment = asyncWrapper( async (req, res) => {
-        const equipment = await Equipment.create(req.body, {
-            runValidators: true,
-        });
-        res.status(200).json({ equipment });
-});
+// export const createEquipment = async (req, res) => {
+//   try {
+//     const equipment = await Equipment.create(req.body, {runValidators: true});
+    
+// }
 
 export const getEquipment = asyncWrapper( async (req, res) => {
         const {id:equipmentID} = req.params;
