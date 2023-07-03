@@ -1,23 +1,25 @@
 export const dataUser = [
     {
-      _id: "63701cc1f03239c72c00017f",
-      name: "Dalton",
-      email: "Dalton@test.com",
-      password: "XRYBnKAfm",
+      _id: "64a322c5d8267f715779afde",
+      username: "Warren Wice",
+      email: "wice@test.com",
+      password: "qwertyuiop",
+      role: "superadmin",
+    },
+    {
+      _id: "64a322f7d8267f715779afe0",
+      name: "Warren Mulubi",
+      email: "mulubi@test.com",
+      password: "asdfghjkl;",
       role: "admin",
     },
     {
-      _id: "63701cc1f03239c72c000180",
-      name: "Yvonne",
-      email: "yvonne@test.com",
-      password: "XRYBnKAfm",
+      _id: "64a32333d8267f715779afe3",
+      name: "Warren Mudachi",
+      email: "mudachi@test.com",
+      password: "zxcvbnm,./",
       role: "user",
     },
-    {
-      _id: "63701cc1f03239c72c000360",
-      name: "Warren",
-      email: "warren@test.com",
-      password: "XRYBnKAfm",
-      role: "superadmin",
-    },
 ];
+
+
